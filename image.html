@@ -1,568 +1,266 @@
 <!DOCTYPE html>
-<!-- Website - www.codingnepalweb.com -->
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="description" content="Today we will create a Responsive Image Gallery with Lightbox using HTML CSS & JavaScript. As you know earlier I have created a Video Gallery with Lightbox features, which was very beautiful and useful." />
-    <meta
-      name="keywords"
-      content="Create Image Gallery with Lightbox,CSS Gallery,HTML and CSS,HTML CSS JavaScript,Image CSS Image Gallery,Image Gallery,Image Gallery with Lightbox,
-HTML,CSS,JavaScript,Tailwind,Bootstrap"
-    />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Image Gallery with Lightbox HTML CSS JavaScript | CodingNepal</title>
-    <link rel="stylesheet" href="style.css" />
-    <!-- Fontawesome CDN Link -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-    <script src="../custom-scripts.js" defer></script>
-    <Style>
-      @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
-*{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
+<html>
+<head>
+  <style>
+ body {
+  background-color: #eee;
 }
-section{
-  position: relative;
-  min-height: 100vh;
-  width: 100%;
-  margin: 0 20px;
+.hello {
+  opacity: 1 !important;
 }
-section .lightBox{
+.full {
   position: fixed;
-  top: 0;
   left: 0;
-  height: 100%;
-  width: 100%;
-  background: rgba(0,0,0,0.6);
-  z-index: 100;
-  display: none;
-}
-.lightBox .lightBox_content{
-  position: fixed;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  max-width: 950px;
-  width: 100%;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-  padding: 20px;
-}
-.lightBox_content .close{
-  position: absolute;
   top: 0;
-  left: -40px;
-  font-size: 30px;
-  color: #fff;
-  cursor: pointer;
-  opacity: 0.8;
-}
-.lightBox_content .close:hover{
-  opacity: 1;
-}
-section .logo_icons{
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-bottom: 20px;
-}
-section .logo_icons a{
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-}
-section .logo_icons .logoImg{
-  height: 40px;
-  width: 40px;
-  border-radius: 50%;
-}
-section .logo_icons .text_content{
-  display: flex;
-  flex-direction: column;
-  margin-left: 10px;
-  color: #333;
-  font-size: 16px;
-  font-weight: 500;
-}
-.logo_icons .text_content .followers{
-  font-size: 13px;
-  margin-top: -5px;
-}
-section .logo_icons .icons i{
-  height: 35px;
-  width: 35px;
-  background: #ccc;
-  text-align: center;
-  line-height: 35px;
-  font-size: 16px;
-  color: #fff;
-  border-radius: 4px;
-  margin: 0 5px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-.lightBox .logo_icons .icons i:hover{
-  color: #fff;
-  background: #7d2ae8;
-}
-section .lightBox .showImg{
-  display: flex;
-  justify-content: center;
-  height: 100%;
-  width: 100%;
-}
-.lightBox .showImg .image{
-  max-height: 700px;
-  max-width: 900px;
-}
-.showImg .image img{
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  z-index: 1;
 }
-section .image-gallery{
-  max-width: 1300px;
-  min-height: 100vh;
+.full .content {
+  background-color: rgba(0,0,0,0.75) !important;
+  height: 100%;
   width: 100%;
-  background: #fff;
+  display: grid;
+}
+.full .content img {
+  left: 50%;
+  transform: translate3d(0, 0, 0);
+  animation: zoomin 1s ease;
+  max-width: 100%;
+  max-height: 100%;
   margin: auto;
 }
-.image-gallery header{
-  color: #fff;
-  font-size: 30px;
-  font-weight: 600;
-  text-align: center;
-  background: #24292d;
-  padding: 20px 0;
-  letter-spacing: 1px;
-}
-.image-gallery .image-container{
-  columns: 3;
-  margin-top: 20px;
-  gap: 15px;
-}
-.image-container img{
-  width: 100%;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-}
-.image-container .image-box{
-  position: relative;
-  cursor: pointer;
-  margin: 10px 0;
-}
-.image-box .logo_icons{
-  position: absolute;
-  bottom: 5px;
-  left: 0;
-  width: 100%;
-  padding: 10px 15px;
-  background: rgba(0, 0, 0, 0.2);
-  box-shadow: 0 -10px 10px rgba(0, 0, 0, 0.2);
+.byebye {
   opacity: 0;
-  pointer-events: none;
-  transition: all 0.3s ease;
 }
-.image-box:hover .logo_icons{
-  opacity: 1;
-  pointer-events: auto;
+.byebye:hover {
+  transform: scale(0.2) !important;
 }
-.image-box .logo_icons .icons i{
-  color: #b4b4b4;
-  background: #fff;
+.gallery {
+  display: grid;
+  grid-column-gap: 8px;
+  grid-row-gap: 8px;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-auto-rows: 8px;
 }
-.logo_icons .icons i:hover{
-  color: #707070;
+.gallery img {
+  max-width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 0 16px #333;
+  transition: all 1.5s ease;
 }
-section .image-gallery .logo_icons .text_content{
-  color: #fff;
-  font-size: 14px
+.gallery img:hover {
+  box-shadow: 0 0 32px #333;
 }
-section .image-gallery .text_content .followers{
-  font-size: 12px;
-  font-weight: 400;
-  margin-top: -4px;
+.gallery .content {
+  padding: 4px;
 }
-@media (max-width: 1034px) {
-  .lightBox_content .close{
-    top: -40px;
-    left: 10px;
+.gallery .gallery-item {
+  transition: grid-row-start 300ms linear;
+  transition: transform 300ms ease;
+  transition: all 0.5s ease;
+  cursor: pointer;
+}
+.gallery .gallery-item:hover {
+  transform: scale(1.025);
+}
+@media (max-width: 600px) {
+  .gallery {
+    grid-template-columns: repeat(auto-fill, minmax(30%, 1fr));
   }
 }
-@media (max-width: 1002px) {
-  .image-gallery .image-container{
-    columns: 2;
+@media (max-width: 400px) {
+  .gallery {
+    grid-template-columns: repeat(auto-fill, minmax(50%, 1fr));
   }
 }
-@media (max-width: 602px) {
-  .image-gallery .image-container{
-    columns: 1;
+@-moz-keyframes zoomin {
+  0% {
+    max-width: 50%;
+    transform: rotate(-30deg);
+    filter: blur(4px);
   }
-@media (max-width: 602px) {
-  .image-gallery header{
-    font-size: 25px;
+  30% {
+    filter: blur(4px);
+    transform: rotate(-80deg);
+  }
+  70% {
+    max-width: 50%;
+    transform: rotate(45deg);
+  }
+  100% {
+    max-width: 100%;
+    transform: rotate(0deg);
   }
 }
+@-webkit-keyframes zoomin {
+  0% {
+    max-width: 50%;
+    transform: rotate(-30deg);
+    filter: blur(4px);
+  }
+  30% {
+    filter: blur(4px);
+    transform: rotate(-80deg);
+  }
+  70% {
+    max-width: 50%;
+    transform: rotate(45deg);
+  }
+  100% {
+    max-width: 100%;
+    transform: rotate(0deg);
+  }
 }
-    </Style>
-  </head>
-  <body>
-    <section>
-      <div class="lightBox">
-        <div class="lightBox_content">
-          <i class="fas fa-times close"></i>
-          <div class="logo_icons">
-            <a href="#">
-              <img class="logoImg" src="images/logo.png" alt="" />
-              <div class="text_content">
-                <span class="name">HenaArts</span>
-                <span class="followers">Order now</span>
-              </div>
-            </a>
-            <div class="icons">
-              <i class="fas fa-heart"></i>
-              <i class="fas fa-arrow-down"></i>
+@-o-keyframes zoomin {
+  0% {
+    max-width: 50%;
+    transform: rotate(-30deg);
+    filter: blur(4px);
+  }
+  30% {
+    filter: blur(4px);
+    transform: rotate(-80deg);
+  }
+  70% {
+    max-width: 50%;
+    transform: rotate(45deg);
+  }
+  100% {
+    max-width: 100%;
+    transform: rotate(0deg);
+  }
+}
+@keyframes zoomin {
+  0% {
+    max-width: 50%;
+    transform: rotate(-30deg);
+    filter: blur(4px);
+  }
+  30% {
+    filter: blur(4px);
+    transform: rotate(-80deg);
+  }
+  70% {
+    max-width: 50%;
+    transform: rotate(45deg);
+  }
+  100% {
+    max-width: 100%;
+    transform: rotate(0deg);
+  }
+}
+
+  </style>
+</head>
+    <body>
+        <h1>Genuine Mehndi Gallery</h1>
+    
+        <div class="gallery" id="gallery">
+            <div class="gallery-item">
+                <div class="content"><img src="images/arts 13.jpg" alt=""></div>
             </div>
-          </div>
-          <div class="showImg">
-            <div class="image">
-              <img src="images/img1.jpg" alt="" />
+            <div class="gallery-item">
+                <div class="content"><img src="images/arts 02.jpg" alt=""></div>
             </div>
-          </div>
+            <div class="gallery-item">
+                <div class="content"><img src="images/arts 03.jpg" alt=""></div>
+            </div>
+            <div class="gallery-item">
+                <div class="content"><img src="images/arts 04.jpg" alt=""></div>
+            </div>
+            <div class="gallery-item">
+                <div class="content"><img src="images/arts 05.jpg" alt=""></div>
+            </div>
+            <div class="gallery-item">
+                <div class="content"><img src="images/arts 06.jpg" alt=""></div>
+            </div>
+            <div class="gallery-item">
+                <div class="content"><img src="images/arts 07.jpg" alt=""></div>
+            </div>
+            <div class="gallery-item">
+                <div class="content"><img src="images/arts 08.jpg" alt=""></div>
+            </div>
+            <div class="gallery-item">
+                <div class="content"><img src="images/arts 09.jpg" alt=""></div>
+            </div>
+            <div class="gallery-item">
+                <div class="content"><img src="images/arts 10.jpg" alt=""></div>
+            </div>
+            <div class="gallery-item">
+                <div class="content"><img src="images/arts 11.jpg" alt=""></div>
+            </div>
+            <div class="gallery-item">
+                <div class="content"><img src="images/arts 12.jpg" alt=""></div>
+            </div>
+            <div class="gallery-item">
+                <div class="content"><img src="images/Arts 1.jpg" alt=""></div>
+            </div>
+            <div class="gallery-item">
+                <div class="content"><img src="images/arts 14.jpg" alt=""></div>
+            </div>
+            <div class="gallery-item">
+                <div class="content"><img src="images/arts 15.jpg" alt=""></div>
+            </div>
+            <div class="gallery-item">
+                <div class="content"><img src="images/arts 16.jpg" alt=""></div>
+            </div>
+            <div class="gallery-item">
+                <div class="content"><img src="images/arts 17.jpg" alt=""></div>
+            </div>
+            <div class="gallery-item">
+                <div class="content"><img src="images/arts 18.jpg" alt=""></div>
+            </div>
+            <div class="gallery-item">
+                <div class="content"><img src="images/arts 19.jpg" alt=""></div>
+            </div>
+            <div class="gallery-item">
+                <div class="content"><img src="images/ssarts 20.jpg" alt=""></div>
+            </div>
+
+          
+            
         </div>
-      </div>
+         
+    </body>
+    </html>
+      
+    <!-- Repeat the structure for other images -->
+  </div>
+  <script>
+   var gallery = document.querySelector('#gallery');
+var getVal = function (elem, style) { return parseInt(window.getComputedStyle(elem).getPropertyValue(style)); };
+var getHeight = function (item) { return item.querySelector('.content').getBoundingClientRect().height; };
+var resizeAll = function () {
+    var altura = getVal(gallery, 'grid-auto-rows');
+    var gap = getVal(gallery, 'grid-row-gap');
+    gallery.querySelectorAll('.gallery-item').forEach(function (item) {
+        var el = item;
+        el.style.gridRowEnd = "span " + Math.ceil((getHeight(item) + gap) / (altura + gap));
+    });
+};
+gallery.querySelectorAll('img').forEach(function (item) {
+    item.classList.add('byebye');
+    if (item.complete) {
+        console.log(item.src);
+    }
+    else {
+        item.addEventListener('load', function () {
+            var altura = getVal(gallery, 'grid-auto-rows');
+            var gap = getVal(gallery, 'grid-row-gap');
+            var gitem = item.parentElement.parentElement;
+            gitem.style.gridRowEnd = "span " + Math.ceil((getHeight(gitem) + gap) / (altura + gap));
+            item.classList.remove('byebye');
+        });
+    }
+});
+window.addEventListener('resize', resizeAll);
+gallery.querySelectorAll('.gallery-item').forEach(function (item) {
+    item.addEventListener('click', function () {        
+        item.classList.toggle('full');        
+    });
+});
 
-      <div class="image-gallery">
-        <header>Masonry Image Gallery</header>
-        <div class="image-container">
-          <div class="image-box">
-            <img class="gImg" src="images/arts 03.jpg" alt="" />
-            <div class="logo_icons">
-              <a href="#">
-                <img class="logoImg" src="images/logo.png" alt="" />
-                <div class="text_content">
-                  <span class="name">HenaArts</span>
-                <span class="followers">Order now</span>
-                </div>
-              </a>
-              <div class="icons">
-                <i class="fas fa-heart"></i>
-                <i class="fas fa-arrow-down"></i>
-              </div>
-            </div>
-          </div>
-          <div class="image-box">
-            <img class="gImg" src="images/arts 04.jpg" alt="" />
-            <div class="logo_icons">
-              <a href="#">
-                <img class="logoImg" src="images/logo.png" alt="" />
-                <div class="text_content">
-                  <span class="name">HenaArts</span>
-                <span class="followers">Order now</span>
-                </div>
-              </a>
-              <div class="icons">
-                <i class="fas fa-heart"></i>
-                <i class="fas fa-arrow-down"></i>
-              </div>
-            </div>
-          </div>
-          <div class="image-box">
-            <img class="gImg" src="images/arts 02.jpg" alt="" />
-            <div class="logo_icons">
-              <a href="#">
-                <img class="logoImg" src="images/logo.png" alt="" />
-                <div class="text_content">
-                  <span class="name">HenaArts</span>
-                <span class="followers">Order now</span>
-                </div>
-              </a>
-              <div class="icons">
-                <i class="fas fa-heart"></i>
-                <i class="fas fa-arrow-down"></i>
-              </div>
-            </div>
-          </div>
-          <div class="image-box">
-            <img class="gImg" src="images/arts 05.jpg" alt="" />
-            <div class="logo_icons">
-              <a href="#">
-                <img class="logoImg" src="images/logo.png" alt="" />
-                <div class="text_content">
-                  <span class="name">HenaArts</span>
-                <span class="followers">Order now</span>
-                </div>
-              </a>
-              <div class="icons">
-                <i class="fas fa-heart"></i>
-                <i class="fas fa-arrow-down"></i>
-              </div>
-            </div>
-          </div>
-          <div class="image-box">
-            <img class="gImg" src="images/Arts 01.jpg" alt="" />
-            <div class="logo_icons">
-              <a href="#">
-                <img class="logoImg" src="images/logo.png" alt="" />
-                <div class="text_content">
-                  <span class="name">HenaArts</span>
-                <span class="followers">Order now</span>
-                </div>
-              </a>
-              <div class="icons">
-                <i class="fas fa-heart"></i>
-                <i class="fas fa-arrow-down"></i>
-              </div>
-            </div>
-          </div>
-          <div class="image-box">
-            <img class="gImg" src="images/arts 06.jpg" alt="" />
-            <div class="logo_icons">
-              <a href="#">
-                <img class="logoImg" src="images/logo.png" alt="" />
-                <div class="text_content">
-                  <span class="name">HenaArts</span>
-                  <span class="followers">Order now</span>
-                </div>
-              </a>
-              <div class="icons">
-                <i class="fas fa-heart"></i>
-                <i class="fas fa-arrow-down"></i>
-              </div>
-            </div>
-          </div>
-          <div class="image-box">
-            <img class="gImg" src="images/arts 07.jpg" alt="" />
-            <div class="logo_icons">
-              <a href="#">
-                <img class="logoImg" src="images/logo.png" alt="" />
-                <div class="text_content">
-                  <span class="name">HenaArts</span>
-                <span class="followers">Order now</span>
-                </div>
-              </a>
-              <div class="icons">
-                <i class="fas fa-heart"></i>
-                <i class="fas fa-arrow-down"></i>
-              </div>
-            </div>
-          </div>
-          <div class="image-box">
-            <img class="gImg" src="images/arts 08.jpg" alt="" />
-            <div class="logo_icons">
-              <a href="#">
-                <img class="logoImg" src="images/logo.png" alt="" />
-                <div class="text_content">
-                  <span class="name">HenaArts</span>
-                <span class="followers">Order now</span>
-                </div>
-              </a>
-              <div class="icons">
-                <i class="fas fa-heart"></i>
-                <i class="fas fa-arrow-down"></i>
-              </div>
-            </div>
-          </div>
-          <div class="image-box">
-            <img class="gImg" src="images/arts 09.jpg" alt="" />
-            <div class="logo_icons">
-              <a href="#">
-                <img class="logoImg" src="images/logo.png" alt="" />
-                <div class="text_content">
-                  <span class="name">HenaArts</span>
-                <span class="followers">Order now</span>
-                </div>
-              </a>
-              <div class="icons">
-                <i class="fas fa-heart"></i>
-                <i class="fas fa-arrow-down"></i>
-              </div>
-            </div>
-          </div>
-          <div class="image-box">
-            <img class="gImg" src="images/arts 10.jpg" alt="" />
-            <div class="logo_icons">
-              <a href="#">
-                <img class="logoImg" src="images/logo.png" alt="" />
-                <div class="text_content">
-                  <span class="name">HenaArts</span>
-                <span class="followers">Order now</span>
-                </div>
-              </a>
-              <div class="icons">
-                <i class="fas fa-heart"></i>
-                <i class="fas fa-arrow-down"></i>
-              </div>
-            </div>
-          </div>
-          <div class="image-box">
-            <img class="gImg" src="images/arts 11.jpg" alt="" />
-            <div class="logo_icons">
-              <a href="#">
-                <img class="logoImg" src="images/logo.png" alt="" />
-                <div class="text_content">
-                  <span class="name">HenaArts</span>
-                  <span class="followers">Order now</span>
-                </div>
-              </a>
-              <div class="icons">
-                <i class="fas fa-heart"></i>
-                <i class="fas fa-arrow-down"></i>
-              </div>
-            </div>
-          </div>
-          <div class="image-box">
-            <img class="gImg" src="images/arts 12.jpg" alt="" />
-            <div class="logo_icons">
-              <a href="#">
-                <img class="logoImg" src="images/logo.png" alt="" />
-                <div class="text_content">
-                  <span class="name">HenaArts</span>
-                <span class="followers">Order now</span>
-                </div>
-              </a>
-              <div class="icons">
-                <i class="fas fa-heart"></i>
-                <i class="fas fa-arrow-down"></i>
-              </div>
-            </div>
-          </div>
-          <div class="image-box">
-            <img class="gImg" src="images/arts 13.jpg" alt="" />
-            <div class="logo_icons">
-              <a href="#">
-                <img class="logoImg" src="images/logo.png" alt="" />
-                <div class="text_content">
-                  <span class="name">HenaArts</span>
-                <span class="followers">Order now</span>
-                </div>
-              </a>
-              <div class="icons">
-                <i class="fas fa-heart"></i>
-                <i class="fas fa-arrow-down"></i>
-              </div>
-            </div>
-          </div>
-          <div class="image-box">
-            <img class="gImg" src="images/arts 14.jpg" alt="" />
-            <div class="logo_icons">
-              <a href="#">
-                <img class="logoImg" src="images/logo.png" alt="" />
-                <div class="text_content">
-                  <span class="name">HenaArts</span>
-                  <span class="followers">Order now</span>
-                </div>
-              </a>
-              <div class="icons">
-                <i class="fas fa-heart"></i>
-                <i class="fas fa-arrow-down"></i>
-              </div>
-            </div>
-          </div>
-          <div class="image-box">
-            <img class="gImg" src="images/arts 15.jpg" alt="" />
-            <div class="logo_icons">
-              <a href="#">
-                <img class="logoImg" src="images/logo.png" alt="" />
-                <div class="text_content">
-                  <span class="name">HenaArts</span>
-                <span class="followers">Order now</span>
-                </div>
-              </a>
-              <div class="icons">
-                <i class="fas fa-heart"></i>
-                <i class="fas fa-arrow-down"></i>
-              </div>
-            </div>
-          </div>
-          <div class="image-box">
-            <img class="gImg" src="images/arts 16.jpg" alt="" />
-            <div class="logo_icons">
-              <a href="#">
-                <img class="logoImg" src="images/logo.png" alt="" />
-                <div class="text_content">
-                  <span class="name">HenaArts</span>
-                  <span class="followers">Order now</span>
-                </div>
-              </a>
-              <div class="icons">
-                <i class="fas fa-heart"></i>
-                <i class="fas fa-arrow-down"></i>
-              </div>
-            </div>
-          </div>
-          <div class="image-box">
-            <img class="gImg" src="images/arts 17.jpg" alt="" />
-            <div class="logo_icons">
-              <a href="#">
-                <img class="logoImg" src="images/logo.png" alt="" />
-                <div class="text_content">
-                  <span class="name">HenaArts</span>
-                  <span class="followers">Order now</span>
-                </div>
-              </a>
-              <div class="icons">
-                <i class="fas fa-heart"></i>
-                <i class="fas fa-arrow-down"></i>
-              </div>
-            </div>
-          </div>
-          <div class="image-box">
-            <img class="gImg" src="images/arts 18.jpg" alt="" />
-            <div class="logo_icons">
-              <a href="#">
-                <img class="logoImg" src="images/logo.png" alt="" />
-                <div class="text_content">
-                  <span class="name">HenaArts</span>
-                  <span class="followers">Order now</span>
-                </div>
-              </a>
-              <div class="icons">
-                <i class="fas fa-heart"></i>
-                <i class="fas fa-arrow-down"></i>
-              </div>
-            </div>
-          </div>
-          <div class="image-box">
-            <img class="gImg" src="images/arts 14.jpg" alt="" />
-            <div class="logo_icons">
-              <a href="#">
-                <img class="logoImg" src="images/logo.png" alt="" />
-                <div class="text_content">
-                  <span class="name">HenaArts</span>
-                  <span class="followers">Order now</span>
-                </div>
-              </a>
-              <div class="icons">
-                <i class="fas fa-heart"></i>
-                <i class="fas fa-arrow-down"></i>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <script>
-      let body = document.querySelector("body"),
-    lightBox = document.querySelector(".lightBox"),
-    img = document.querySelectorAll(".gImg"),
-    showImg = lightBox.querySelector(".showImg img"),
-    close = lightBox .querySelector(".close");
-
-   for (let image of img) {
-     image.addEventListener("click", ()=>{
-       showImg.src = image.src;
-       lightBox.style.display = "block";
-       body.style.overflow = "hidden";
-       close.onclick = ()=>{
-         lightBox.style.display = "none";
-         body.style.overflow = "visible";
-       };
-     });
-   }
-    </script>
-  </body>
+  </script>
+</body>
 </html>
