@@ -424,7 +424,7 @@ img{
   max-width: 360px;
   width: 100%;
   text-align: center;
-  border: 6px solid var(--section-bg);
+  border: 6px solid var(--section-bg) ;
   background-color: var(--white-color);
 }
 .aboutImg-textBox .content-description{
@@ -504,7 +504,7 @@ img{
 .menu-item{
   position: relative;
   padding: 2rem 2.5rem;
-  background-color: var(--white-color);
+  background-color: var(--white-color);/*box color */
 }
 .menuItem-details{
   margin-right: 1.5rem;
